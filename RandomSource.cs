@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 namespace RandomApp
 {
-    class RandomCache
+    class RandomSource
     {
         readonly Random _rnd;
 
         readonly List<int> _numbers;
 
-        public RandomCache(int seed)
+        public RandomSource(int seed)
         {
             _rnd = new Random(seed);
             _numbers = new List<int>();
@@ -17,16 +17,12 @@ namespace RandomApp
 
         public int FromSequence(int number)
         {
-            if (_numbers.Count >= number)
+            if (_numbers.Count <= number)
             {
-                return _numbers[number];
+                _numbers.Add(_rnd.Next(9));
             }
-            else
-            {
-                var next = _rnd.Next(8);
-                _numbers.Add(next);
-                return next;
-            }
+
+            return _numbers[number];
         }
     }
 }
