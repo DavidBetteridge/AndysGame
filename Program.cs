@@ -26,8 +26,9 @@ namespace RandomApp
             Heart1 = 5,
             Heart2 = 6,
             Heart3 = 7,
-            Exit = 8,
-            Player = 9
+            Wall = 8,
+            Exit = 9,
+            Player = 10
         }
 
         class GameState
@@ -56,7 +57,7 @@ namespace RandomApp
                 {
                     for (int row = 0; row < size; row++)
                     {
-                        _board[column, row] = (Piece)rnd.Next(8);
+                        _board[column, row] = (Piece)rnd.Next(9);
                     }
                 }
                 _board[0, 0] = Piece.Player;
@@ -75,7 +76,7 @@ namespace RandomApp
                         switch (_board[column, row])
                         {
                             case Piece.Bridge:
-                                line += "==";
+                                line += "~~";
                                 break;
                             case Piece.Monster1:
                                 line += "-1";
@@ -104,6 +105,9 @@ namespace RandomApp
                             case Piece.Player:
                                 line += ":)";
                                 break;
+                            case Piece.Wall:
+                                line += "--";
+                                break;
                             default:
                                 break;
                         }
@@ -131,11 +135,11 @@ namespace RandomApp
             internal IEnumerable<Direction> FindAvailableMoves()
             {
                 var moves = new List<Direction>();
-                if ((_playerX > 0) && (_board[_playerX - 1, _playerY] != Piece.Bridge)) moves.Add(Direction.Left);
-                if ((_playerX < _size - 1) && (_board[_playerX + 1, _playerY] != Piece.Bridge)) moves.Add(Direction.Right);
+                if ((_playerX > 0) && (_board[_playerX - 1, _playerY] != Piece.Wall)) moves.Add(Direction.Left);
+                if ((_playerX < _size - 1) && (_board[_playerX + 1, _playerY] != Piece.Wall)) moves.Add(Direction.Right);
 
-                if ((_playerY > 0) && (_board[_playerX, _playerY - 1] != Piece.Bridge)) moves.Add(Direction.Down);
-                if ((_playerY < _size - 1) && (_board[_playerX, _playerY + 1] != Piece.Bridge)) moves.Add(Direction.Up);
+                if ((_playerY > 0) && (_board[_playerX, _playerY - 1] != Piece.Wall)) moves.Add(Direction.Down);
+                if ((_playerY < _size - 1) && (_board[_playerX, _playerY + 1] != Piece.Wall)) moves.Add(Direction.Up);
 
                 return moves;
             }
@@ -215,7 +219,7 @@ namespace RandomApp
                         {
                             _board[x, _playerY] = _board[x + 1, _playerY];
                         }
-                        _board[_size - 1, _playerY] = (Piece)rnd.Next(8);
+                        _board[_size - 1, _playerY] = (Piece)rnd.Next(9);
                         break;
 
 
@@ -224,7 +228,7 @@ namespace RandomApp
                         {
                             _board[x, _playerY] = _board[x - 1, _playerY];
                         }
-                        _board[0, _playerY] = (Piece)rnd.Next(8);
+                        _board[0, _playerY] = (Piece)rnd.Next(9);
                         break;
 
                     case Direction.Up:
@@ -232,7 +236,7 @@ namespace RandomApp
                         {
                             _board[_playerX, y] = _board[_playerX, y - 1];
                         }
-                        _board[_playerX, 0] = (Piece)rnd.Next(8);
+                        _board[_playerX, 0] = (Piece)rnd.Next(9);
                         break;
 
                     case Direction.Down:
@@ -240,7 +244,7 @@ namespace RandomApp
                         {
                             _board[_playerX, y] = _board[_playerX, y + 1];
                         }
-                        _board[_playerX, _size - 1] = (Piece)rnd.Next(8);
+                        _board[_playerX, _size - 1] = (Piece)rnd.Next(9);
                         break;
                     default:
                         break;
@@ -290,6 +294,9 @@ namespace RandomApp
                     }
                 }
             }
+
+            Console.WriteLine("It is NOT possible");
+            Console.ReadKey();
 
         }
 
