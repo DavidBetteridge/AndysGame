@@ -111,10 +111,20 @@ namespace RandomApp
             _moves = gameState._moves;
         }
 
-        internal bool IsAWin() => _playerAtExit;
-        internal bool IsALoss() => (_healthPoints <= 0);
+        internal bool IsAWin()
+        {
+            return _playerAtExit;
+        }
 
-        internal string Moves() => _moves;
+        internal bool IsALoss()
+        {
+            return (_healthPoints <= 0);
+        }
+
+        internal string Moves()
+        {
+            return _moves;
+        }
 
         internal IEnumerable<Direction> FindAvailableMoves()
         {

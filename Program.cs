@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -34,6 +36,21 @@ namespace RandomApp
     {
         static void Main(string[] args)
         {
+
+            IPAddress ip =new IPAddress(new byte[] { 127, 0, 0, 1 });
+            TcpListener server = new TcpListener(ip, Convert.ToInt32(8074));
+            TcpClient client = default(TcpClient);
+            try
+            {
+                server.Start();
+                Console.WriteLine("Server started...");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            };
+
+
             var randomSource = new RandomSource(seed: 1234);
             var initialPosition = new GameState(size: 4, randomSource: randomSource);
             Console.WriteLine(initialPosition);
