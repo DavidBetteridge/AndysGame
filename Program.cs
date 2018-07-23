@@ -40,12 +40,12 @@ namespace RandomApp
             var initialPosition = new GameState(size: 4, randomSource: randomSource);
             Console.WriteLine(initialPosition);
 
-            var movesToExamine = new Stack<(GameState GameState, Direction Direction)>();
+            var movesToExamine = new Stack<StateAndDirection>();
 
             var availableMovesFromCurrentPosition = initialPosition.FindAvailableMoves();
             foreach (var move in availableMovesFromCurrentPosition)
             {
-                movesToExamine.Push((initialPosition, move));
+                movesToExamine.Push(new StateAndDirection(initialPosition, move));
             }
 
 
@@ -68,7 +68,7 @@ namespace RandomApp
                     var availableMovesFromNewPosition = newPosition.FindAvailableMoves();
                     foreach (var move in availableMovesFromNewPosition)
                     {
-                        movesToExamine.Push((newPosition, move));
+                        movesToExamine.Push(new StateAndDirection(newPosition, move));
 
                     }
                 }
